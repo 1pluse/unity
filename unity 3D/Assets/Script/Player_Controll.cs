@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Character_Move: MonoBehaviour
-//Character_Move 클래스의 MonoBehaviour 상속
+public class Player_Controller : MonoBehaviour
+//Player_Controller 클래스의 MonoBehaviour 상속
 {
-    public float speed = 5f; 
+    public float speed = 5f;
     //float speed 변수의 값을 5f(접미사)로 할당
+    public GameObject Bullet;
+    float destroy;
 
     void Update() //랜덤(매) 주기마다 프레임 호출
     {
@@ -16,8 +18,16 @@ public class Character_Move: MonoBehaviour
 
         Vector3 Move = new Vector3(x, 0, z);
         //Vector3 Move 변수의 Vector3() 생성 후 Vector3의 매개변수를 할당
-        
+
         transform.Translate(Move * speed * Time.deltaTime);
         //transform.Translate 함수를 사용하여 Move * speed * Time.deltaTime의 값으로 위치를 변경
+
+        ShootBullet();
+    }
+    void ShootBullet()
+    {
+        // 총알 프리팹을 복제하여 생성
+        Bullet = Instantiate(Bullet);
+        Bullet.transform.position += Vector3.up * speed * Time.deltaTime;
     }
 }
