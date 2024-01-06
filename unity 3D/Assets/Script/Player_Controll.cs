@@ -6,8 +6,10 @@ public class Player_Controller : MonoBehaviour
 {
     public float speed = 5f;
     //float speed 변수의 값을 5f(접미사)로 할당
-    public GameObject Bullet;
-    float destroy;
+    float BulletSpeed = 12.5f;
+    public GameObject Bulletfrefab;
+    float time;
+
 
     void Update() //랜덤(매) 주기마다 프레임 호출
     {
@@ -21,13 +23,17 @@ public class Player_Controller : MonoBehaviour
 
         transform.Translate(Move * speed * Time.deltaTime);
         //transform.Translate 함수를 사용하여 Move * speed * Time.deltaTime의 값으로 위치를 변경
+        BulletMove();
 
-        ShootBullet();
     }
-    void ShootBullet()
+    void BulletMove()
     {
-        // 총알 프리팹을 복제하여 생성
-        Bullet = Instantiate(Bullet);
-        Bullet.transform.position += Vector3.up * speed * Time.deltaTime;
+        time += Time.deltaTime;
+        Debug.Log("Shoot");
+        if (time > 0.3f) {
+            GameObject Bullet = Instantiate(Bulletfrefab, transform.position, Quaternion.identity);
+            Bullet.transform.Translate(Vector3.forward * BulletSpeed * Time.deltaTime);
+            time -= 0.3f;
+        }
     }
 }
